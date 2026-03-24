@@ -32,7 +32,7 @@ plt.rcParams.update({
 fig, ax = plt.subplots(figsize=(10, 6))
 for cat in categories:
     cat_data = summary[summary["Drug_Category"] == cat].sort_values("Year")
-    ax.plot(cat_data["Year"], cat_data["total_claims"], '-o', color=colors[cat],
+    ax.plot(cat_data["Year"], cat_data["Total_Claims"], '-o', color=colors[cat],
             label=cat, linewidth=2, markersize=6)
 ax.set_xlabel("Year")
 ax.set_ylabel("Total Medicare Part D Claims")
@@ -49,7 +49,7 @@ print("Saved Figure 1: Total Claims")
 fig, ax = plt.subplots(figsize=(10, 6))
 for cat in categories:
     cat_data = summary[summary["Drug_Category"] == cat].sort_values("Year")
-    ax.plot(cat_data["Year"], cat_data["claims_per_provider"], '-o', color=colors[cat],
+    ax.plot(cat_data["Year"], cat_data["Claims_Per_Provider"], '-o', color=colors[cat],
             label=cat, linewidth=2, markersize=6)
 ax.set_xlabel("Year")
 ax.set_ylabel("Mean Claims Per Provider")
@@ -65,7 +65,7 @@ print("Saved Figure 2: Claims Per Provider")
 fig, ax = plt.subplots(figsize=(10, 6))
 for cat in categories:
     cat_data = summary[summary["Drug_Category"] == cat].sort_values("Year")
-    ax.plot(cat_data["Year"], cat_data["n_prescribers"], '-o', color=colors[cat],
+    ax.plot(cat_data["Year"], cat_data["N_Prescribers"], '-o', color=colors[cat],
             label=cat, linewidth=2, markersize=6)
 ax.set_xlabel("Year")
 ax.set_ylabel("Number of Prescribers")
@@ -82,7 +82,7 @@ print("Saved Figure 3: Prescriber Counts")
 fig, ax = plt.subplots(figsize=(10, 6))
 for cat in categories:
     cat_data = summary[summary["Drug_Category"] == cat].sort_values("Year")
-    ax.plot(cat_data["Year"], cat_data["avg_days_per_claim"], '-o', color=colors[cat],
+    ax.plot(cat_data["Year"], cat_data["Avg_Days_Per_Claim"], '-o', color=colors[cat],
             label=cat, linewidth=2, markersize=6)
 ax.set_xlabel("Year")
 ax.set_ylabel("Average Days Supply Per Claim")
@@ -97,10 +97,10 @@ print("Saved Figure 4: Days Supply")
 # ── Figure 5: Normalized Trends (2014=100) ──
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 metrics = [
-    ("total_claims", "Total Claims"),
-    ("claims_per_provider", "Claims Per Provider"),
-    ("n_prescribers", "Number of Prescribers"),
-    ("avg_days_per_claim", "Avg Days Supply/Claim"),
+    ("Total_Claims", "Total Claims"),
+    ("Claims_Per_Provider", "Claims Per Provider"),
+    ("N_Prescribers", "Number of Prescribers"),
+    ("Avg_Days_Per_Claim", "Avg Days Supply/Claim"),
 ]
 for idx, (metric, title) in enumerate(metrics):
     ax = axes[idx // 2][idx % 2]
@@ -130,7 +130,7 @@ print("Saved Figure 5: Normalized Trends")
 fig, ax = plt.subplots(figsize=(10, 6))
 for cat in categories:
     cat_data = summary[summary["Drug_Category"] == cat].sort_values("Year")
-    ax.plot(cat_data["Year"], cat_data["total_cost"] / 1e6, '-o', color=colors[cat],
+    ax.plot(cat_data["Year"], cat_data["Total_Drug_Cost"] / 1e6, '-o', color=colors[cat],
             label=cat, linewidth=2, markersize=6)
 ax.set_xlabel("Year")
 ax.set_ylabel("Total Drug Cost ($ Millions)")
@@ -147,8 +147,8 @@ fig, ax = plt.subplots(figsize=(10, 6))
 bottoms = np.zeros(len(YEARS))
 for cat in categories:
     cat_data = summary[summary["Drug_Category"] == cat].sort_values("Year")
-    year_totals = summary.groupby("Year")["total_claims"].sum()
-    proportions = cat_data["total_claims"].values / year_totals.values * 100
+    year_totals = summary.groupby("Year")["Total_Claims"].sum()
+    proportions = cat_data["Total_Claims"].values / year_totals.values * 100
     ax.bar(YEARS, proportions, bottom=bottoms, color=colors[cat], label=cat, width=0.7)
     bottoms += proportions
 ax.set_xlabel("Year")
